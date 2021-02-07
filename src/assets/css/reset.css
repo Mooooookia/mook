@@ -16,7 +16,7 @@ a {
 
 a:hover {
   color: #666;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 i, em {
@@ -26,6 +26,7 @@ i, em {
 input, textarea, button, select, a {
   outline: none;
   border: none;
+  padding: 0;
 }
 
 table {
