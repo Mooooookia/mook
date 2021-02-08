@@ -1,11 +1,11 @@
 import React, { memo, useState } from 'react'
-
+import { withRouter } from 'react-router-dom'
 
 import {
   SearchBarWrapper
 } from './style'
 
-export default memo(function MookSearchBar() {
+export default withRouter(memo(function MookSearchBar(props) {
   const [value, setValue] = useState("");
   const [focusd, setFocusd] = useState(false);
 
@@ -16,7 +16,19 @@ export default memo(function MookSearchBar() {
     setFocusd(true)
   }
   function inputBlur () {
-    setFocusd(false)
+    setTimeout(e => setFocusd(false), 100);
+  }
+  function onSearch () {
+    if (!props.history) return;
+    if (!value) return;
+    props.history.push({
+      pathname: `/search?key=${value}&type=article`,
+      // state: {
+      //   key: value,
+      //   type: "article"
+      // }
+    })
+    
   }
 
   return (
@@ -32,8 +44,8 @@ export default memo(function MookSearchBar() {
             onBlur={e => inputBlur()}
             onChange={e => inputChange(e.target.value)}/>
         </div>
-        <i className="search-icon iconfont">&#xe615;</i>
+        <i className="search-icon iconfont" onClick={e => onSearch()}>&#xe615;</i>
       </SearchBarWrapper>
     </div>
   )
-})
+}))

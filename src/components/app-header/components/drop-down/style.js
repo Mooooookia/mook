@@ -9,6 +9,7 @@ export const DropDownWrapper = styled.div`
     font-size: 16px;
     line-height: 20px;
     display: flex;
+    background: transparent;
     &:hover {
       background: #eee;
     }
@@ -22,9 +23,10 @@ export const DropDownWrapper = styled.div`
     }
     .drop-down-item-title {
       flex: 1;
-      font-size: 18px;
+      font-size: 16px;
       line-height: 24px;
       margin-left: 10px;
+      color: #666;
     }
   }
 `

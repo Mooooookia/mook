@@ -2,7 +2,7 @@ import React, { memo, useState } from 'react'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
 import { headerLinks, userLinks } from '@/common/local-data'
-
+import { changeIsLoginAction } from '@/pages/login/store'
 
 import { NavLink, withRouter } from 'react-router-dom'
 import MookSearchBar from '@/components/search-bar'
@@ -21,6 +21,8 @@ export default withRouter(memo(function MookHeader(props) {
     isLogin: state.getIn(["user", "isLogin"]),
     userInfo: state.getIn(["user", "userInfo"])
   }), shallowEqual);
+
+  const dispatch = useDispatch();
 
   function jumpToWrite () {
     if (!props.history) return;
@@ -49,9 +51,18 @@ export default withRouter(memo(function MookHeader(props) {
             onMouseEnter={e => setShowDropDown(true)}
             onMouseLeave={e => setShowDropDown(false)}>
             <div className="avatar">
-              <img src={userInfo.avatar} className="avatar-img"/>
+              <img src={userInfo.avatar} className="avatar-img" alt="#"/>
             </div>
-            <MookDropDown className="dropdown" linkList={userLinks}/>
+            <MookDropDown 
+              className="dropdown" 
+              linkList={userLinks} 
+              extra={{
+                title: "退出",
+                icon: "&#xe612;",
+                handle: e => {
+                  dispatch(changeIsLoginAction(false))
+                }
+              }}/>
           </div>
           <button className="write-btn">
             <div className="iconfont write-icon">&#xe627;</div>

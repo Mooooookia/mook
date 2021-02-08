@@ -34,5 +34,6 @@ export const SearchBarWrapper = styled.div`
     line-height: 30px;
     background: ${props => props.focusd ? "#ccc" : "transparent"};
     transition: background .2s;
+    cursor: pointer;
   }
 `

@@ -7,7 +7,7 @@ import {
 } from './style'
 
 export default memo(function MookDropDown(props) {
-  const { linkList = [], className } = props;
+  const { linkList = [], className, extra } = props;
   return (
     <DropDownWrapper className={className}>
       {
@@ -19,6 +19,13 @@ export default memo(function MookDropDown(props) {
             </div>
           </Link>
         ))
+      }
+      { extra && <div className="drop-down-item" onClick={extra.handle}>
+          <div className="drop-down-item-icon iconfont" dangerouslySetInnerHTML={{__html: extra.icon}}></div>
+          <div className="drop-down-item-title">
+            {extra.title}
+          </div>
+        </div>
       }
     </DropDownWrapper>
   )

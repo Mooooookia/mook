@@ -26,7 +26,7 @@ export const userLinks = [
   },
   {
     title: "我的关注",
-    icon: "&#xe613;",
+    icon: "&#xe7f5;",
     link: "/follow/following"
   },
   {
