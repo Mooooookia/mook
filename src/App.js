@@ -5,9 +5,10 @@ import { renderRoutes } from 'react-router-config'
 import routes from './router';
 import store from './store';
 
-
 import { HashRouter } from 'react-router-dom'
-import MookHeader from "@/components/app-header"
+import MookHeader from "./components/app-header"
+import Message from './components/message'
+
 
 export default memo(function App() {
   return (
@@ -15,6 +16,7 @@ export default memo(function App() {
       <HashRouter>
         <MookHeader/>
         {renderRoutes(routes)}
+        <Message/>
       </HashRouter>
     </Provider>
   )

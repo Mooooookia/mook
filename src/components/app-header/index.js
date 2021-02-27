@@ -1,10 +1,13 @@
-import React, { memo, useState } from 'react'
+import React, { memo, useState, useEffect } from 'react'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
-import { headerLinks, userLinks } from '@/common/local-data'
-import { changeIsLoginAction } from '@/pages/login/store'
 
-import { NavLink, withRouter } from 'react-router-dom'
+import { headerLinks, userLinks } from '@/common/local-data'
+import { changeIsLoginAction, getUserInfoAction } from '@/pages/login/store'
+import { getAvatar } from '@/utils/avatar'
+import toast from '@/utils/message'
+
+import { NavLink, withRouter, Link } from 'react-router-dom'
 import MookSearchBar from '@/components/search-bar'
 import MookDropDown from './components/drop-down'
 import {
@@ -23,6 +26,10 @@ export default withRouter(memo(function MookHeader(props) {
   }), shallowEqual);
 
   const dispatch = useDispatch();
+  
+  useEffect(() => {
+    dispatch(getUserInfoAction());
+  }, [dispatch])
 
   function jumpToWrite () {
     if (!props.history) return;
@@ -32,7 +39,7 @@ export default withRouter(memo(function MookHeader(props) {
   return (
     <HeaderWrapper>
       <HeaderLeft>
-        <a className="logo" href="/">Mook</a>
+        <Link className="logo" to="/">Mook</Link>
         <div className="nav-wrapper">
           {
             headerLinks.map((item, index) => {
@@ -51,7 +58,7 @@ export default withRouter(memo(function MookHeader(props) {
             onMouseEnter={e => setShowDropDown(true)}
             onMouseLeave={e => setShowDropDown(false)}>
             <div className="avatar">
-              <img src={userInfo.avatar} className="avatar-img" alt="#"/>
+              <img src={getAvatar(userInfo.id)} className="avatar-img" alt="#"/>
             </div>
             <MookDropDown 
               className="dropdown" 
@@ -61,6 +68,8 @@ export default withRouter(memo(function MookHeader(props) {
                 icon: "&#xe612;",
                 handle: e => {
                   dispatch(changeIsLoginAction(false))
+                  localStorage.removeItem("token")
+                  toast(dispatch, "注销成功")
                 }
               }}/>
           </div>
@@ -71,8 +80,8 @@ export default withRouter(memo(function MookHeader(props) {
         </UserWrapper>
       ) : (
         <HeaderRight>
-          <button className="login">登录</button>
-          <button className="register">注册</button>
+          <Link to="/login" className="login">登录</Link>
+          <Link to="/register" className="register">注册</Link>
         </HeaderRight>
       )}
       

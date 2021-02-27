@@ -4,6 +4,7 @@ export const DropDownWrapper = styled.div`
   width: 160px;
   background: #fff;
   box-shadow: 0 2px 10px 5px rgba(0, 0, 0, .1);
+  padding: 5px 0;
   .drop-down-item {
     padding: 10px 20px;
     font-size: 16px;

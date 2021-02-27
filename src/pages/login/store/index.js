@@ -1,7 +1,8 @@
 import reducer from './reducer'
-import { changeIsLoginAction } from './actionCreators'
+import { changeIsLoginAction, getUserInfoAction } from './actionCreators'
 
 export {
   reducer,
-  changeIsLoginAction
+  changeIsLoginAction,
+  getUserInfoAction
 }

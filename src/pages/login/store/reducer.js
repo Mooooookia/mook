@@ -3,9 +3,8 @@ import { Map } from 'immutable'
 import * as actionTypes from './constants'
 
 const defaultState = Map({
-  isLogin: true,
+  isLogin: false,
   userInfo: {
-    avatar: "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2923846288,2346052074&fm=11&gp=0.jpg"
   }
 });
 

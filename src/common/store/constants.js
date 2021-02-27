@@ -1,0 +1,2 @@
+export const CHANGE_SHOW_MESSAGE = "common/CHANGE_SHOW_MESSAGE"
+export const CHANGE_MESSAGE = "common/CHANGE_MESSAGE"

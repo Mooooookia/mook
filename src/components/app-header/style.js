@@ -1,11 +1,16 @@
 import styled from 'styled-components'
 
 export const HeaderWrapper = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   height: 58px;
   font-size: 14px;
   background: #fff;
   display: flex;
   justify-content: space-between;
+  border-bottom: #eee 1px solid;
 `
 
 export const HeaderLeft = styled.div`
@@ -66,6 +71,7 @@ export const HeaderRight = styled.div`
     color: #7fb80e;
     background: transparent;
     cursor: pointer;
+    text-align: center;
   }
 `
 
@@ -104,7 +110,7 @@ export const UserWrapper = styled.div`
     .dropdown {
       visibility: ${props => (props.showDropDown ? "visable" : "hidden")};
       position: absolute;
-      top: 58px;
+      top: 59px;
       left: 0;
     }
   }
