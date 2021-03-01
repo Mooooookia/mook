@@ -11,6 +11,7 @@ export const HeaderWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   border-bottom: #eee 1px solid;
+  z-index: 999;
 `
 
 export const HeaderLeft = styled.div`
@@ -112,6 +113,7 @@ export const UserWrapper = styled.div`
       position: absolute;
       top: 59px;
       left: 0;
+      z-index: 999;
     }
   }
   .write-btn {

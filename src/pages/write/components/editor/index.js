@@ -1,4 +1,5 @@
 import React, { memo, useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 
 import MarkdownIt from 'markdown-it'
 import MdEditor from 'react-markdown-editor-lite'
@@ -7,6 +8,9 @@ import 'react-markdown-editor-lite/lib/index.css';
 import {
   getArticleInfo
 } from '@/service/article'
+import { picture } from '@/service/upload'
+import toast from '@/utils/message'
+import { proBaseURL } from '@/common/config'
 
 import {
   EditorWrapper
@@ -22,6 +26,8 @@ export default memo(function MookEditor(props) {
   const [tags, setTags] = useState([]);
   const [tag, setTag] = useState("")
   
+  const dispatch = useDispatch();
+
   useEffect(() => {
     if (!article) return;
     setTitle(article.title)
@@ -51,6 +57,25 @@ export default memo(function MookEditor(props) {
   function onSubmit() {
     updateArticle(article.id, title, content, tags)
   }
+  function upload(e) {
+    const files = e.target.files;
+    if (!files || !files[0]) return;
+    const file = files[0];
+    if (file.size > 3 * 1024 * 1024) {
+      e.target.value = '';
+      toast(dispatch, "文件超过3M!");
+      return;
+    }
+    const data = new FormData();
+    data.append('picture', file)
+    picture(data, article.id).then(res => {
+      console.log(res.data[0])
+      e.target.value = '';
+      toast(dispatch, "上传图片成功！");
+      setContent(content + `![](${proBaseURL}/upload/picture/${res.data[0]})`)
+    })
+  }
+
   return (
     <EditorWrapper>
       <div className="top">
@@ -59,6 +84,9 @@ export default memo(function MookEditor(props) {
         </div>
         <div className="option">
           <button className="submit" onClick={onSubmit}>发表</button>
+          <button className="submit">
+            上传图片<input className="file" type="file" onChange={e => upload(e)}/>
+          </button>
           <button className="submit delete" onClick={e => removeArticle(article.id)}>删除</button>
         </div>
       </div>

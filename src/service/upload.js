@@ -8,7 +8,5 @@ export function avatar(file) {
 }
 
 export function picture(file, id) {
-  return request.post(`/upload?articleId=${id}`, {
-    file
-  })
+  return request.post(`/upload/picture?articleId=${id}`, file)
 }

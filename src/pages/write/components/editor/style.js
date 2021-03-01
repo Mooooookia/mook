@@ -40,8 +40,20 @@ export const EditorWrapper = styled.div`
         color: #fff;
         font-size: 15px;
         margin-right: 10px;
+        position: relative;
+        cursor: pointer;
         &.delete {
           background: #ff4d4f;
+        }
+        .file {
+          position: absolute;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          width: 100%;
+          height: 100%;
+          opacity: 0;
+          cursor: pointer;
         }
       }
     }
