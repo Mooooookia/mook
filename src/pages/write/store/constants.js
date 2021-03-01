@@ -1,3 +1,0 @@
-export const CHANGE_ARTICLE_LIST = "write/CHANGE_ARTICLE_LIST"
-export const CHANGE_ARTICLE_INFO = "write/CHANGE_ARTCILE_INFO"
-export const ADD_NEW_ARTICLE = "write/ADD_NEW_ARTICLE"

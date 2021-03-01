@@ -10,6 +10,7 @@ export const ListWrapper = styled.div`
   height: 100%;
   overflow-y: scroll;
   overflow-x: hidden;
+  flex-shrink: 0;
   .add-new {
     display: block;
     width: 100px;

@@ -23,11 +23,11 @@ export function changeArticle(id, title, content, tags) {
 }
 
 export function deleteArticle(id) {
-  return request.delete(`/article${id}`);
+  return request.delete(`/article/${id}`);
 }
 
 export function getArticleInfo(id) {
-  return request.get(`/article${id}`);
+  return request.get(`/article/${id}`);
 }
 
 export function addLike(articleId) {

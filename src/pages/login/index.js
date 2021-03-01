@@ -37,7 +37,7 @@ export default memo(function MookLogin(props) {
         <input className="input" placeholder="请输入用户名" value={username} onChange={e => setUsername(e.target.value)}/>
       </div>
       <div className="input-wrapper">
-        <input className="input" placeholder="请输入密码" value={password} onChange={e => setPassword(e.target.value)}/>
+        <input type="password" className="input" placeholder="请输入密码" value={password} onChange={e => setPassword(e.target.value)}/>
       </div>
       <button className="submit-btn" onClick={e => onLogin()}>登录</button>
     </LoginWrapper>

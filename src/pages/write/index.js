@@ -1,82 +1,98 @@
-import React, { memo, useState, useCallback } from 'react'
-import { useSelector, useDispatch, shallowEqual } from 'react-redux'
+import React, { memo, useState, useEffect } from 'react'
+import { useDispatch, useSelector, shallowEqual } from 'react-redux'
 import classnames from 'classnames'
 
+import {
+  getArticleList,
+  addArticle,
+  changeArticle,
+  deleteArticle
+} from '@/service/article'
+import toast from '@/utils/message'
 
-import { addNewArticleAction, changeArticleInfoAction } from './store/actionCreators'
+import checkLogin from '@/components/check-login'
 
-import { Redirect } from 'react-router-dom'
 import MookEditor from './components/editor'
 import {
   WriteWrapper,
   ListWrapper
 } from './style'
 
-export default memo(function MookWrite() {
+export default checkLogin(memo(function MookWrite() {
   const [chooseIndex, setChooseIndex] = useState(0);
-  const [showNewArticle, setShowNewArticle] = useState(false);
-
-  const { isLogin, articleList = [], emptyArticle } = useSelector(state => ({
-    isLogin: state.getIn(["user", "isLogin"]),
-    articleList: state.getIn(["write", "articleList"]),
-    emptyArticle: state.getIn(["write", "emptyArticle"])
-  }), shallowEqual);
-  
+  const [articleList, setArticleList] = useState([])
+  const { userInfo } = useSelector(state => ({
+    userInfo: state.getIn(["user", "userInfo"])
+  }), shallowEqual)
+  const { id: userId } = userInfo;
   const dispatch = useDispatch();
 
-  const updateArticle = useCallback((id, data) => {
-    if (id > -1) dispatch(changeArticleInfoAction(id, data));
-    else {
-      //新建文章，调用接口
-      dispatch()
-    }
-  }, [dispatch])
-
-  function addNewArticle () {
-    setChooseIndex(-1);
-    setShowNewArticle(true)
-
+  function getList() {
+    return getArticleList({
+      offset: 0,
+      limit: 999,
+      userId,
+      order: "desc",
+      key: "id"
+    }).then(res => {
+      res = res.data
+      setArticleList(res.result)
+    })
   }
+  function refresh() {
+    getList();
+    setChooseIndex(0);
+  }
+  function addNewArticle () {
+    addArticle("新建文章", "", []).then(res => {
+      refresh();
+    })
+  }
+  function updateArticle(articleId, title, content, tags) {
+    changeArticle(articleId, title, content, tags).then(res => {
+      getList();
+      toast(dispatch, "发表成功")
+    })
+  }
+  function removeArticle(articleId) {
+    deleteArticle(articleId).then(res => {
+      refresh();
+      toast(dispatch, "删除成功")
+    })
+  }
+  
+  useEffect(() => {
+    refresh();
+  }, [])// eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <>
-      {isLogin || <Redirect to="login"/>}
-      <WriteWrapper>
-        <ListWrapper>
-          <button className="add-new" onClick={e => addNewArticle()}>
-            <i className="iconfont add-icon">&#xe62f;</i>&nbsp;
-            新建文章
-          </button>
-          <div className="article-list">
-            {
-              articleList.map((item, index) => (
-                <div
-                  className={classnames("article-item", {"choose-item": index === chooseIndex})}
-                  key={item.id}
-                  onClick={e => setChooseIndex(index)}>
-                  <div className="article-title">{item.title}</div>
-                  <div className="article-info">
-                    <div className="article-category">{item.category}</div>
-                    <div className="article-count">字数：{item.count}</div>
-                  </div>
+    <WriteWrapper>
+      <ListWrapper>
+        <button className="add-new" onClick={e => addNewArticle()}>
+          <i className="iconfont add-icon">&#xe62f;</i>&nbsp;
+          新建文章
+        </button>
+        <div className="article-list">
+          {
+            articleList.map((item, index) => (
+              <div
+                className={classnames("article-item", {"choose-item": index === chooseIndex})}
+                key={item.id}
+                onClick={e => setChooseIndex(index)}>
+                <div className="article-title">{item.title}</div>
+                <div className="article-info">
+                  <div className="article-count">字数：{item.content.length}</div>
                 </div>
-              ))
-            }
-            {showNewArticle && <div
-              className={classnames("article-item", {"choose-item": chooseIndex === -1})}
-              key={-1}
-              onClick={e => setChooseIndex(-1)}>
-              <div className="article-title">新文章</div>
-              <div className="article-info">
-                <div className="article-category">未知</div>
-                <div className="article-count">字数：0</div>
               </div>
-            </div>
-            }
-          </div>
-        </ListWrapper>
-        <MookEditor article={chooseIndex > -1 ? articleList[chooseIndex] : emptyArticle} onSubmit={data => updateArticle(chooseIndex, data)}/>
-      </WriteWrapper>
-    </>
+            ))
+          }
+        </div>
+      </ListWrapper>
+      <MookEditor
+        article={articleList[chooseIndex]}
+        updateArticle={updateArticle}
+        removeArticle={removeArticle}
+      />
+    </WriteWrapper>
   )
-})
+}))

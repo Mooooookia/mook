@@ -24,7 +24,7 @@ export default memo(function Message(props) {
     <CSSTransition
       in={showMessage}
       timeout={1000}
-      classNames="message"
+      classNames="fade"
       unmountOnExit
     >
       <MessageWrapper>

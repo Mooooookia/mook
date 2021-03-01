@@ -8,6 +8,7 @@ import store from './store';
 import { HashRouter } from 'react-router-dom'
 import MookHeader from "./components/app-header"
 import Message from './components/message'
+import Backtop from './components/backtop'
 
 
 export default memo(function App() {
@@ -17,6 +18,7 @@ export default memo(function App() {
         <MookHeader/>
         {renderRoutes(routes)}
         <Message/>
+        <Backtop/>
       </HashRouter>
     </Provider>
   )

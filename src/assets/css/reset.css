@@ -65,23 +65,23 @@ body, textarea, select, input, button {
 }
 
 #root {
-  padding-top: 58px;
+  padding-top: 59px;
 }
 
 /* transition */
 
-.message-enter {
+.fade-enter {
   opacity: 0;
 }
-.message-enter-active {
+.fade-enter-active {
   opacity: 1;
   transition: opacity 1s;
 }
 
-.message-exit {
+.fade-exit {
   opacity: 1;
 }
-.message-exit-active {
+.fade-exit-active {
   opacity: 0;
   transition: opacity 1s;
 }

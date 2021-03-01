@@ -1,9 +1,10 @@
 import React, { memo } from 'react'
+import checkLogin from '../../components/check-login'
 
-export default memo(function MookMessage() {
+export default checkLogin(memo(function MookMessage() {
   return (
     <div>
       MookMessage
     </div>
   )
-})
+}))
