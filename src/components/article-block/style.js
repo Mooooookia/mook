@@ -8,6 +8,7 @@ export const ArticleWrapper = styled.div`
     color: #333;
     font-size: 18px;
     font-weight: bold;
+    cursor: pointer;
   }
   .content {
     padding: 10px 0;

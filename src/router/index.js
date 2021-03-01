@@ -27,7 +27,7 @@ const routes = [
     component: MookHome
   },
   {
-    path: "/article",
+    path: "/article/:id",
     component: MookArticle
   },
   {
