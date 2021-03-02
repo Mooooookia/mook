@@ -22,11 +22,8 @@ export default withRouter(memo(function MookSearchBar(props) {
     if (!props.history) return;
     if (!value) return;
     props.history.push({
-      pathname: `/search?key=${value}&type=article`,
-      // state: {
-      //   key: value,
-      //   type: "article"
-      // }
+      pathname: `/search`,
+      search: `?key=${value}`
     })
     
   }

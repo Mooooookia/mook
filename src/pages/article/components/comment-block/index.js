@@ -1,14 +1,16 @@
 import React, { memo, useState } from "react";
 import { useDispatch, useSelector, shallowEqual } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import classnames from "classnames";
 
 import { getAvatar } from "@/utils/avatar";
 import toast from "@/utils/message";
 import { addLike, deleteLike } from "@/service/comment";
+import parseTime from '@/utils/time'
 
 import { CommentWrapper } from "./style";
 
-export default memo(function MookCommentBlock(props) {
+export default withRouter(memo(function MookCommentBlock(props) {
   const { comment } = props;
   const [liked, setLiked] = useState(comment.liked);
   const [likeCount, setLikeCount] = useState(comment.likeCount);
@@ -39,14 +41,20 @@ export default memo(function MookCommentBlock(props) {
     }
   }
 
+  function jumpToUser(id) {
+    if (props.history) {
+      props.history.push(`/user/${id}`)
+    }
+  }
+
   return (
     <CommentWrapper>
-      <div className="avatar">
+      <div className="avatar" onClick={e => jumpToUser(comment.user.id)}>
         <img src={getAvatar(comment.user.id)} className="avatar-img" alt="#" />
       </div>
-      <div className="nickname">{comment.user.nickname}</div>
+      <div className="nickname" onClick={e => jumpToUser(comment.user.id)}>{comment.user.nickname}</div>
       <div className="time">
-        {comment.createAt.replace("T", " ").replace(".000Z", "")}
+        {parseTime(comment.createAt)}
       </div>
       <div className="content">{comment.content}</div>
       <div className="option">
@@ -59,4 +67,4 @@ export default memo(function MookCommentBlock(props) {
       </div>
     </CommentWrapper>
   );
-});
+}))

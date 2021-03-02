@@ -40,6 +40,7 @@ export const LeftWrapper = styled.div`
         height: 50px;
         border-radius: 50%;
         overflow: hidden;
+        cursor: pointer;
         .avatar-img {
           width: 100%;
         }
@@ -49,6 +50,7 @@ export const LeftWrapper = styled.div`
         color: #404040;
         font-size: 16px;
         line-height: 30px;
+        cursor: pointer;
       }
       .info {
         height: 20px;
@@ -96,6 +98,11 @@ export const LeftWrapper = styled.div`
           border: 1px solid #ccc;
           background: #fff;
           cursor: pointer;
+          &.lighted {
+            border: none;
+            background: #ccc;
+            color: #fff;
+          }
         }
         .option-title {
           margin-top: 2px;
@@ -122,6 +129,11 @@ export const LeftWrapper = styled.div`
           border: 1px solid #ccc;
           background: #fff;
           cursor: pointer;
+          &.lighted {
+            border: none;
+            background: #ccc;
+            color: #fff;
+          }
         }
         .option-title {
           margin-top: 2px;
@@ -214,5 +226,58 @@ export const LeftWrapper = styled.div`
 
 export const RightWrapper = styled.div`
   width: 300px;
-  background: yellow;
+  .right-wrapper {
+    width: 280px;
+    margin-top: 10px;
+    background: #fff;
+    overflow: hidden;
+    padding: 10px;
+    position: sticky;
+    top: 59px;
+    .author {
+      width: 100%;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #eee;
+      cursor: pointer;
+      .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        overflow: hidden;
+        .avatar-img {
+          width: 100%;
+        }
+        margin: 0 10px;
+      }
+      .nickname {
+        font-size:14px;
+        color: #2d2d2d;
+      }
+    }
+    .article-list {
+      width: 100%;
+      .article-item {
+        margin: 20px 10px;
+        .article-title {
+          font-size: 14px;
+          line-height: 16px;
+          color: #2d2d2d;
+          margin: 10px 0;
+          cursor: pointer;
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+        .article-info {
+          font-size: 12px;
+          color: #969696;
+          .article-like {
+            margin-left: 10px;
+          }
+        }
+      }
+    }
+  }
 `

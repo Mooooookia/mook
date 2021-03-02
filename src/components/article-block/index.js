@@ -6,11 +6,17 @@ import {
 } from './style'
 
 export default withRouter(memo(function MookArticleBlock(props) {
-  const {id, title, content, author, commentCount, likeCount, viewCount} = props.info;
+  const {id, title, content, author = {}, commentCount, likeCount, viewCount} = props.info;
   
   function jumpTo() {
     if (props.history) {
       props.history.push(`/article/${id}`)
+    }
+  }
+
+  function jumpToUser(id) {
+    if (props.history) {
+      props.history.push(`/user/${id}`)
     }
   }
 
@@ -19,7 +25,7 @@ export default withRouter(memo(function MookArticleBlock(props) {
       <div className="title text-nowrap" onClick={e => jumpTo()}>{title}</div>
       <div className="content">{content}</div>
       <div className="info">
-        <div className="info-item">
+        <div className="info-item author" onClick={e => jumpToUser(author.id)}>
           <div className="iconfont">&#xe713;</div>
           <div className="text">{author.nickname}</div>
         </div>

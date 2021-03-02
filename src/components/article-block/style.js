@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const ArticleWrapper = styled.div`
-  width: 700px;
+  width: 100%;
   padding: 20px 0 15px;
   margin-bottom: 10px;
   .title {
@@ -30,6 +30,9 @@ export const ArticleWrapper = styled.div`
       height: 20px;
       padding-right: 15px;
       display: flex;
+      &.author {
+        cursor: pointer;
+      }
       .iconfont {
         line-height: 20px;
         padding-right: 3px;

@@ -3,9 +3,7 @@ import { Redirect } from 'react-router-dom'
 
 import MookHome from "@/pages/home";
 import MookArticle from "@/pages/article";
-import MookCollection from "@/pages/collection";
 import MookDiscover from "@/pages/discover";
-import MookFollow from "@/pages/follow";
 import MookLogin from "@/pages/login";
 import MookMessage from "@/pages/message";
 import MookRegister from "@/pages/register";
@@ -13,6 +11,11 @@ import MookSearch from "@/pages/search";
 import MookSetting from "@/pages/setting";
 import MookUser from "@/pages/user";
 import MookWrite from "@/pages/write";
+import MookArticleList from '@/pages/user/components/article'
+import MookCollected from '@/pages/user/components/collected'
+import MookFollower from '@/pages/user/components/follower'
+import MookFollowing from '@/pages/user/components/following'
+import MookLiked from '@/pages/user/components/liked'
 
 const routes = [
   {
@@ -31,16 +34,8 @@ const routes = [
     component: MookArticle
   },
   {
-    path: "/collection",
-    component: MookCollection
-  },
-  {
     path: "/discover",
     component: MookDiscover
-  },
-  {
-    path: "/follow",
-    component: MookFollow
   },
   {
     path: "/login",
@@ -63,8 +58,31 @@ const routes = [
     component: MookSetting
   },
   {
-    path: "/user",
-    component: MookUser
+    path: "/user/:id",
+    component: MookUser,
+    routes: [
+      {
+        path: "/user/:id/",
+        exact: true,
+        component: MookArticleList
+      },
+      {
+        path: "/user/:id/collected",
+        component: MookCollected
+      },
+      {
+        path: "/user/:id/follower",
+        component: MookFollower
+      },
+      {
+        path: "/user/:id/following",
+        component: MookFollowing
+      },
+      {
+        path: "/user/:id/liked",
+        component: MookLiked
+      },
+    ]
   },
   {
     path: "/write",

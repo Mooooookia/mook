@@ -5,9 +5,8 @@ import classnames from 'classnames'
 import "react-markdown-editor-lite/lib/index.css";
 
 import MarkdownIt from "markdown-it";
-import { getArticleInfo, addLike, addCollection } from "@/service/article";
-import { addComment } from '@/service/comment'
-import { getCommentList } from '@/service/comment'
+import { getArticleInfo, addLike, addCollection, getArticleList, deleteLike, deleteCollection } from "@/service/article";
+import { addComment,getCommentList } from '@/service/comment'
 import { getAvatar } from '@/utils/avatar'
 import toast from '@/utils/message'
 
@@ -35,6 +34,7 @@ export default memo(function MookArticle(props) {
   const [comment, setComment] = useState("")
   const [commentList, setCommentList] = useState([]);
   const [chooseIndex, setChooseIndex] = useState(0);
+  const [articleList, setArticleList] = useState([])
 
   const { isLogin } = useSelector(state => ({
     isLogin: state.getIn(["user", "isLogin"])
@@ -61,6 +61,19 @@ export default memo(function MookArticle(props) {
     });
   }, [articleId]);// eslint-disable-line react-hooks/exhaustive-deps
 
+  useEffect(() => {
+    if (!author || !author.id) return;
+    getArticleList({
+      offset: 0,
+      limit: 5,
+      userId: author.id,
+      order: "desc",
+      key: "id"
+    }).then(res => {
+      setArticleList(res.data.result);
+    })
+  }, [author])
+
   function getComment(order, key) {
     getCommentList({
       articleId,
@@ -78,7 +91,10 @@ export default memo(function MookArticle(props) {
       return;
     }
     if (liked) {
-      toast(dispatch, "你已喜欢该文章")
+      deleteLike(articleId).then(res => {
+        toast(dispatch, "取消喜欢成功")
+        setLiked(false)
+      })
       return;
     }
     addLike(articleId).then(res => {
@@ -92,7 +108,10 @@ export default memo(function MookArticle(props) {
       return;
     }
     if (collected) {
-      toast(dispatch, "你已收藏该文章")
+      deleteCollection(articleId).then(res => {
+        toast(dispatch, "取消收藏成功")
+        setCollected(false)
+      })
       return;
     }
     addCollection(articleId).then(res => {
@@ -115,16 +134,28 @@ export default memo(function MookArticle(props) {
     })
   }
 
+  function jumpToUser(id) {
+    if (props.history) {
+      props.history.push(`/user/${id}`)
+    }
+  }
+
+  function jumpToArticle(id) {
+    if (props.history) {
+      props.history.push(`/article/${id}`)
+    }
+  }
+
   return (
     <ArticleWrapper>
       <LeftWrapper>
         <div className="article">
           <div className="title">{title}</div>
           <div className="author">
-            <div className="avatar">
+            <div className="avatar" onClick={e => jumpToUser(author.id)}>
               <img src={getAvatar(author.id)} className="avatar-img" alt="#"/>
             </div>
-            <div className="nickname">{author.nickname}</div>
+            <div className="nickname" onClick={e => jumpToUser(author.id)}>{author.nickname}</div>
             <div className="info">
               <span className="time">{createAt.replace("T", " ").replace(".000Z", "")}</span>
               <span className="word">字数 {content.length}</span>
@@ -147,11 +178,11 @@ export default memo(function MookArticle(props) {
           </div>
           <div className="option">
             <div className="like">
-              <i className="iconfont like" onClick={onLike}>&#xe7f5;</i>
+              <i className={classnames("iconfont", "like", {lighted: liked})} onClick={onLike}>&#xe7f5;</i>
               <div className="option-title">喜欢</div>
             </div>
             <div className="collect">
-              <i className="iconfont collect" onClick={onCollect}>&#xe613;</i>
+              <i className={classnames("iconfont", "collect",{lighted: collected})} onClick={onCollect}>&#xe613;</i>
               <div className="option-title">收藏</div>
             </div>
             
@@ -189,7 +220,31 @@ export default memo(function MookArticle(props) {
           </div>
         </div>
       </LeftWrapper>
-      <RightWrapper></RightWrapper>
+      <RightWrapper>
+        <div className="right-wrapper">
+          <div className="author" onClick={e => jumpToUser(author.id)}>
+            <div className="avatar">
+              <img src={getAvatar(author.id)} className="avatar-img" alt="#"/>
+            </div>
+            <div className="nickname">{author.nickname}</div>
+          </div>
+          <div className="article-list">
+            {
+              articleList.map((item, index) => {
+                return (
+                  <div className="article-item" key={item.id}>
+                    <div className="article-title" onClick={e => jumpToArticle(item.id)}>{item.title}</div>
+                    <div className="article-info">
+                      <span className="view">阅读 {item.viewCount} </span>
+                      <span className="like">喜欢 {item.likeCount}</span>
+                    </div>
+                  </div>
+                )
+              })
+            }
+          </div>
+        </div>
+      </RightWrapper>
     </ArticleWrapper>
   );
 });

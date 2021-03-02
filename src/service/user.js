@@ -51,9 +51,9 @@ export function addFollow(userId) {
 }
 
 export function deleteFollow(userId) {
-  return request.delete('/user/follow', {
+  return request.delete('/user/follow', { data: {
     userId
-  })
+  }})
 }
 
 export function getFollowing(params) {

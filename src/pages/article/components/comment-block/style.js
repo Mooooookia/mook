@@ -14,6 +14,7 @@ export const CommentWrapper = styled.div`
     position: absolute;
     left: 10px;
     top: 0;
+    cursor: pointer;
     .avatar-img {
       width: 100%;
     }
@@ -23,6 +24,7 @@ export const CommentWrapper = styled.div`
     line-height: 20px;
     font-size: 15px;
     color: #404040;
+    cursor: pointer;
   }
   .time {
     height: 20px;

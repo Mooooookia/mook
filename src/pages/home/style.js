@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const HomeWrapper = styled.div`
   display: flex;
   width: 900px;
-  margin: 0 auto;
+  margin: 20px auto;
 `
 
 export const ArticleListWrapper = styled.div`
@@ -11,6 +11,6 @@ export const ArticleListWrapper = styled.div`
 `
 
 export const SideBarWrapper = styled.div`
-  width: 280px;
+  width: 200px;
   height: 400px;
 `

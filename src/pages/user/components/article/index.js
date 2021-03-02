@@ -1,20 +1,21 @@
 import React, { memo, useState, useEffect } from 'react'
-import { getArticleList } from '../../service/article'
+
+import { getArticleList } from '@/service/article'
 import { scroll } from '@/utils/optimize'
 
-import MookArticleBlock from '../../components/article-block'
+import MookArticleBlock from '@/components/article-block'
 
-import {
-  HomeWrapper,
-  ArticleListWrapper,
-  SideBarWrapper
-} from './style'
-
-export default memo(function MookHome() {
+export default memo(function MookArticleList(props) {
+  const userId = props.match.params.id
   const [currentPage, setCurrentPage] = useState(1);
-  const [articleCount, setArticleCount] = useState(999);
   const [articleList, setArticleList] = useState([])
-  
+  const [articleCount, setArticleCount] = useState(999);
+
+  useEffect(() => {
+    setCurrentPage(1);
+    setArticleCount(999);
+    setArticleList([]);
+  }, [userId])
 
   useEffect(() => {
     const offset = (currentPage - 1) * 10;
@@ -23,16 +24,14 @@ export default memo(function MookHome() {
       offset,
       limit: 10,
       order: "desc",
-      key: "id"
+      key: "id",
+      userId
     }).then(res => {
       res = res.data;
       setArticleCount(res.count)
       setArticleList([...articleList, ...res.result])
     })
   }, [currentPage])// eslint-disable-line react-hooks/exhaustive-deps
-
-  
-
 
   useEffect(() => {
     const onScroll = scroll(() => setCurrentPage(page => page + 1))
@@ -42,18 +41,13 @@ export default memo(function MookHome() {
     }
   }, [])
 
-  
-
   return (
-    <HomeWrapper>
-      <ArticleListWrapper>
-        {
-          articleList.map((item, index) => {
-            return <MookArticleBlock info={item} key={item.id}/>
-          })
-        }
-      </ArticleListWrapper>
-      <SideBarWrapper></SideBarWrapper>
-    </HomeWrapper>
+    <div>
+      {
+        articleList.map((item, index) => {
+          return <MookArticleBlock info={item} key={item.id}/>
+        })
+      }
+    </div>
   )
 })

@@ -37,9 +37,9 @@ export function addLike(articleId) {
 }
 
 export function deleteLike(articleId) {
-  return request.delete('/article/like', {
+  return request.delete('/article/like', {data: {
     articleId
-  })
+  }})
 }
 
 export function getLike(userId, offset = 0, limit = 10) {
@@ -59,9 +59,9 @@ export function addCollection(articleId) {
 }
 
 export function deleteCollection(articleId) {
-  return request.delete('/article/collection', {
+  return request.delete('/article/collection', {data: {
     articleId
-  })
+  }})
 }
 
 export function getCollection(userId, offset = 0, limit = 10) {
