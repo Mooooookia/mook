@@ -90,8 +90,10 @@ export const UserWrapper = styled.div`
     .avatar {
       width: 40px;
       position: relative;
+      height: 40px;
       .avatar-img {
         width: 100%;
+        height: 100%;
         border-radius: 50%;
       }
       &::before {
@@ -105,7 +107,6 @@ export const UserWrapper = styled.div`
         border-top: 6px solid #999;
         border-left: 5px solid transparent;
         border-right: 5px solid transparent;
-
       }
     }
     .dropdown {

@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 
 import { getAvatar } from '@/utils/avatar'
 import { authorInfo } from '@/service/user'
-import { addFollow, deleteFollow } from '@/service/user'
+import { addFollow, deleteFollow, addBlack, deleteBlack } from '@/service/user'
 import toast from '@/utils/message'
 
 import {
@@ -18,6 +18,7 @@ export default memo(function MookUser(props) {
   const userId = props.match.params.id
   const [user, setUser] = useState({})
   const [followed, setFollowed] = useState(false)
+  const [blacked, setBlacked] = useState(false)
   const { isLogin } = useSelector(state => ({
     isLogin: state.getIn(["user", "isLogin"])
   }), shallowEqual)
@@ -45,11 +46,30 @@ export default memo(function MookUser(props) {
     })
   }
 
+  function onBlack() {
+    if (!isLogin) {
+      toast(dispatch, "请您先登陆");
+      return;
+    }
+    if (blacked) {
+      deleteBlack(userId).then(res => {
+        setBlacked(false)
+        toast(dispatch, "移出黑名单成功！")
+      })
+    } else {
+      addBlack(userId).then(res => {
+        setBlacked(true)
+        toast(dispatch, "加入黑名单成功！")
+      })
+    }
+  }
+
 
   useEffect(() => {
     authorInfo(userId).then(res => {
       setUser(res.data)
       setFollowed(!!res.data.followed)
+      setBlacked(!!res.data.blacked)
     })
 
   }, [userId])
@@ -117,6 +137,7 @@ export default memo(function MookUser(props) {
             <div className="content">{user.email}</div>
           </div>
         </div>
+        <button className="black" onClick={onBlack}>{!!blacked ? "移出" : "加入"}黑名单</button>
       </RightWrapper>
     </UserWrapper>
   )

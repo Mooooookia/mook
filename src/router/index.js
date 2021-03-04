@@ -3,7 +3,6 @@ import { Redirect } from 'react-router-dom'
 
 import MookHome from "@/pages/home";
 import MookArticle from "@/pages/article";
-import MookDiscover from "@/pages/discover";
 import MookLogin from "@/pages/login";
 import MookMessage from "@/pages/message";
 import MookRegister from "@/pages/register";
@@ -16,6 +15,10 @@ import MookCollected from '@/pages/user/components/collected'
 import MookFollower from '@/pages/user/components/follower'
 import MookFollowing from '@/pages/user/components/following'
 import MookLiked from '@/pages/user/components/liked'
+import MookSettingBasic from '@/pages/setting/components/setting-basic'
+import MookSettingProfile from '@/pages/setting/components/setting-profile'
+import MookSettingBlacklist from '@/pages/setting/components/setting-blacklist'
+
 
 const routes = [
   {
@@ -32,10 +35,6 @@ const routes = [
   {
     path: "/article/:id",
     component: MookArticle
-  },
-  {
-    path: "/discover",
-    component: MookDiscover
   },
   {
     path: "/login",
@@ -55,7 +54,28 @@ const routes = [
   },
   {
     path: "/setting",
-    component: MookSetting
+    component: MookSetting,
+    routes: [
+      {
+        path: "/setting/",
+        exact: true,
+        render: () => (
+          <Redirect to="/setting/basic"/>
+        )
+      },
+      {
+        path: "/setting/basic",
+        component: MookSettingBasic
+      },
+      {
+        path: "/setting/profile",
+        component: MookSettingProfile
+      },
+      {
+        path: "/setting/blacklist",
+        component: MookSettingBlacklist
+      },
+    ]
   },
   {
     path: "/user/:id",

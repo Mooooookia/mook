@@ -25,7 +25,7 @@ export function register(username, password) {
   })
 }
 
-export function userInfo() {
+export function getUserInfo() {
   return request.get('/user/info');
 }
 
@@ -81,9 +81,9 @@ export function addBlack(userId) {
 }
 
 export function deleteBlack(userId) {
-  return request.delete('/user/blacklist', {
+  return request.delete('/user/blacklist', {data: {
     userId
-  })
+  }})
 }
 
 export function getBlack() {

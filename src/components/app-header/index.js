@@ -2,7 +2,7 @@ import React, { memo, useState, useEffect } from 'react'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
 
-import { headerLinks, userLinks } from '@/common/local-data'
+import { headerLinks } from '@/common/local-data'
 import { changeIsLoginAction, getUserInfoAction } from '@/pages/login/store'
 import { getAvatar } from '@/utils/avatar'
 import toast from '@/utils/message'
@@ -16,6 +16,9 @@ import {
   HeaderRight,
   UserWrapper
 } from './style'
+
+
+
 
 export default withRouter(memo(function MookHeader(props) {
   const [showDropDown, setShowDropDown] = useState(false)
@@ -35,6 +38,35 @@ export default withRouter(memo(function MookHeader(props) {
     if (!props.history) return;
     props.history.push("/write")
   }
+
+
+  const userLinks = [
+    {
+      title: "我的主页",
+      icon: "&#xe713;",
+      link: `/user/${userInfo.id}`
+    },
+    {
+      title: "我的收藏",
+      icon: "&#xe613;",
+      link: `/user/${userInfo.id}/collected`
+    },
+    {
+      title: "我的关注",
+      icon: "&#xe7f5;",
+      link: `/user/${userInfo.id}/following`
+    },
+    {
+      title: "我的粉丝",
+      icon: "&#xe629;",
+      link: `/user/${userInfo.id}/follower`
+    },
+    {
+      title: "设置",
+      icon: "&#xe696;",
+      link: "/setting"
+    }
+  ]
 
   return (
     <HeaderWrapper>

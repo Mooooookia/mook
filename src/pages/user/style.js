@@ -153,4 +153,13 @@ export const RightWrapper = styled.div`
       }
     }
   }
+  .black {
+    margin-left: 15px;
+    font-size: 13px;
+    background: transparent;
+    color: #969696;
+    &:hover {
+      color: #333;
+    }
+  }
 `
