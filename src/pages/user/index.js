@@ -74,6 +74,11 @@ export default memo(function MookUser(props) {
 
   }, [userId])
 
+  function jumpToMessage(id) {
+    if (props.history) {
+      props.history.push(`/message/${id}`)
+    }
+  }
 
   return (
     <UserWrapper>
@@ -83,7 +88,7 @@ export default memo(function MookUser(props) {
             <img className="avatar-img" src={getAvatar(userId)} alt="#"/>
           </div>
           <div className="option">
-            <div className="send">发私信</div>
+            <div className="send" onClick={e => jumpToMessage(userId)}>发私信</div>
             {
               followed ? <div className="follow cancel" onClick={e => cancelFollow()}>已关注</div> : 
               <div className="follow" onClick={e => onFollow()}>关注</div>

@@ -4,7 +4,6 @@ import { Redirect } from 'react-router-dom'
 import MookHome from "@/pages/home";
 import MookArticle from "@/pages/article";
 import MookLogin from "@/pages/login";
-import MookMessage from "@/pages/message";
 import MookRegister from "@/pages/register";
 import MookSearch from "@/pages/search";
 import MookSetting from "@/pages/setting";
@@ -18,6 +17,8 @@ import MookLiked from '@/pages/user/components/liked'
 import MookSettingBasic from '@/pages/setting/components/setting-basic'
 import MookSettingProfile from '@/pages/setting/components/setting-profile'
 import MookSettingBlacklist from '@/pages/setting/components/setting-blacklist'
+import MookMessageList from '@/pages/message/message-list'
+import MookMessageBox from '@/pages/message/message-box'
 
 
 const routes = [
@@ -42,7 +43,12 @@ const routes = [
   },
   {
     path: "/message",
-    component: MookMessage
+    exact: true,
+    component: MookMessageList
+  },
+  {
+    path: "/message/:id",
+    component: MookMessageBox
   },
   {
     path: "/register",

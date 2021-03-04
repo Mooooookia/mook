@@ -17,3 +17,11 @@ export function sendMessage(receiverId, content) {
     content
   })
 }
+
+export function getRecord(userId) {
+  return request.get('/message/record', {
+    params: {
+      userId
+    }
+  })
+}
