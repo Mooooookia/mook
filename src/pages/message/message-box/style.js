@@ -31,7 +31,7 @@ export const MessageBoxWrapper = styled.div`
       .message {
         margin-left: 15px;
         margin-top: 10px;
-        padding: 8px 12px;
+        padding: 16px 12px;
         font-size: 14px;
         line-height: 20px;
         width: 350px;
@@ -74,7 +74,7 @@ export const MessageBoxWrapper = styled.div`
       .message {
         margin-right: 15px;
         margin-top: 10px;
-        padding: 8px 12px;
+        padding: 16px 12px;
         font-size: 14px;
         line-height: 20px;
         width: 350px;

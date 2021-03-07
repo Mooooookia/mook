@@ -273,7 +273,7 @@ export const RightWrapper = styled.div`
         .article-info {
           font-size: 12px;
           color: #969696;
-          .article-like {
+          .like {
             margin-left: 10px;
           }
         }

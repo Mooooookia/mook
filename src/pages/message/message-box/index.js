@@ -8,11 +8,12 @@ import parseTime from '@/utils/time'
 import toast from '@/utils/message'
 import { sendMessage } from '@/service/message'
 
+import checkLogin from '@/components/check-login'
 import {
   MessageBoxWrapper
 } from './style'
 
-export default memo(function MookMessageBox(props) {
+export default checkLogin(memo(function MookMessageBox(props) {
   const [messageList, setMessageList] = useState([])
   const [friendName, setFriendName] = useState("")
   const [content, setContent] = useState("")
@@ -104,4 +105,4 @@ export default memo(function MookMessageBox(props) {
 
     </MessageBoxWrapper>
   )
-})
+}))

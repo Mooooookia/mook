@@ -75,6 +75,10 @@ export default memo(function MookUser(props) {
   }, [userId])
 
   function jumpToMessage(id) {
+    if (!isLogin) {
+      toast(dispatch, "请您先登陆");
+      return;
+    }
     if (props.history) {
       props.history.push(`/message/${id}`)
     }
